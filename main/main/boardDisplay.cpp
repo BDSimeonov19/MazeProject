@@ -2,6 +2,6 @@
 #include "boardDisplay.h"
 using namespace std;
 
-void initialDisplay() {
+void displayBoard(int* board, int n) {
 
 }
