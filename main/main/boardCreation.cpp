@@ -99,4 +99,5 @@ void start()
 	for (int i = 0; i < n; i++)
 		delete board[i];
 	delete[] board;
+
 }
