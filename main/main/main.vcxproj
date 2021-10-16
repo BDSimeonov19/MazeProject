@@ -141,9 +141,13 @@
   <ItemGroup>
     <ClCompile Include="boardCreation.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="boardDisplay.cpp" />
+    <ClCompile Include="mainMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boardCreation.h" />
+    <ClInclude Include="boardDisplay.h" />
+    <ClInclude Include="mainMenu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

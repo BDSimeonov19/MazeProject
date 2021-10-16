@@ -1,6 +1,7 @@
-#include "boardCreation.h"
 #include <iostream>
+#include "boardCreation.h"
 using namespace std;
+
 
 void displayBoard(bool* ptr[], int n) {
 	for (int i = 0; i < n; i++) {

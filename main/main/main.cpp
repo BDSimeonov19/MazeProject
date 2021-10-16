@@ -1,8 +1,8 @@
 #include <iostream>
-#include "boardCreation.h"
+#include "mainMenu.h"
 using namespace std;
 
 int main()
 {
-	start();
+	mainMenu();
 }
