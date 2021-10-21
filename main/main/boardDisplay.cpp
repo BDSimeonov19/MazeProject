@@ -59,6 +59,6 @@ void createBoard(int* path[], int n) {
 
 	//delete the matrix
 	for (int i = 0; i < n; i++)
-		delete path[i];
-	delete[] path;
+		delete board[i];
+	delete[] board;
 }

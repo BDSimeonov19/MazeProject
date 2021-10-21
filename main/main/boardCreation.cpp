@@ -116,7 +116,7 @@ void setup()
 
 
 	//delete the matrix
-	/*for (int i = 0; i < n; i++)
+	for (int i = 0; i < n; i++)
 		delete path[i];
-	delete[] path;*/
+	delete[] path;
 }
