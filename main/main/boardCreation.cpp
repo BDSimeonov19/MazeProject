@@ -7,7 +7,7 @@
 using namespace std;
 GRand rng;
 
-void generatePath(int* path[], int* x, int* y, int n, bool isBranch) {
+void generatePath(int* path[], int* x, int* y, int n, bool isBranch, int nthBranch) {
 	//reset if path is impossible and isn't a branch
 	if ((*x == n - 1 || path[*x + 1][*y] != 0) && (*x == 0 || path[*x - 1][*y] != 0) && (*y == n - 1 || path[*x][*y + 1] != 0) && (*y == 0 || path[*x][*y - 1] != 0) && !isBranch) {
 		for (int i = 0; i < n; i++) {
@@ -31,25 +31,25 @@ void generatePath(int* path[], int* x, int* y, int n, bool isBranch) {
 		case 0:
 			if (*x != 0 && path[*x - 1][*y] == 0) {
 				*x -= 1;
-					path[*x][*y] = 1;
+				path[*x][*y] = nthBranch * 5 + 1;
 			}
 			break;
 		case 1:
 			if (*y != n - 1 && path[*x][*y + 1] == 0) {
 				*y += 1;
-					path[*x][*y] = 2;
+				path[*x][*y] = nthBranch * 5 + 2;
 			}
 			break;
 		case 2:
 			if (*x != n - 1 && path[*x + 1][*y] == 0) {
 				*x += 1;
-					path[*x][*y] = 3;
+				path[*x][*y] = nthBranch * 5 + 3;
 			}
 			break;
 		case 3:
 			if (*y != 0 && path[*x][*y - 1] == 0) {
 				*y -= 1;
-					path[*x][*y] = 4;
+				path[*x][*y] = nthBranch * 5 + 4;
 			}
 			break;
 		}
@@ -63,21 +63,21 @@ void mainPath(int* path[], int n) {
 	path[x][y] = 1;
 
 	while (path[n - 1][n - 1] == 0)
-		generatePath(path, xptr, yptr, n, false);
+		generatePath(path, xptr, yptr, n, false, 0);
 }
 
-void branchPath(int* path[], int n) {
+void branchPath(int* path[], int n, int nthBranch) {
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
 			//decides whether to make a branch
-			if (path[i][j] != 0 && rng.b(0.5)) {
+			if (rng.b(0.50) && (path[i][j] == nthBranch * 5 + 1 || path[i][j] == nthBranch * 5 + 2 || path[i][j] == nthBranch * 5 + 3 || path[i][j] == nthBranch * 5 + 4)) {
 				int x = i, y = j, len = 0;
 				int* xptr = &x;
 				int* yptr = &y;
 				//expands the branch
-				while (rng.b(0.8) && len < n/2) {
+				while (rng.b(0.95)) {
 					len++;
-					generatePath(path, xptr, yptr, n, true);
+					generatePath(path, xptr, yptr, n, true, nthBranch + 1);
 				}
 			}
 		}
@@ -88,7 +88,7 @@ void setup()
 {
 	int n;
 	cout << "Input a board size\n";
-	cout << "(note: board sizes above ~35 take much longer to create)\n";	
+	cout << "(note: board sizes above ~35 take much longer to create)\n";
 	cin >> n;
 
 
@@ -104,7 +104,8 @@ void setup()
 
 	mainPath(path, n);
 	//todo fucking branches pls
-	branchPath(path, n);
+	for (int i = 0; i < n/10; i++)
+		branchPath(path, n, i);
 	createBoard(path, n);
 
 
