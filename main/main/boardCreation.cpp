@@ -1,68 +1,87 @@
 #include <iostream>
+#include <ctime>
+#include <queue>
 #include "boardCreation.h"
 #include "boardDisplay.h"
+#include "grand.h"
 using namespace std;
+GRand rng;
 
-
-void displaypath(bool* path[], int n) {
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++)
-			cout << path[i][j] << " ";
-		cout << endl;
-	}
-}
-
-void createPath(bool* path[], int n) {
-	int pos1 = 0, pos2 = 0, counter = 0;
-	path[pos1][pos2] = 1;
-	while (path[n - 1][n - 1] != 1) {
-		counter++;
-
-		//reset if path is impossible
-		if ((pos1 == n - 1 || path[pos1 + 1][pos2] != 0) && (pos1 == 0 || path[pos1 - 1][pos2] != 0) && (pos2 == n - 1 || path[pos1][pos2 + 1] != 0) && (pos2 == 0 || path[pos1][pos2 - 1] != 0)) {
-			for (int i = 0; i < n; i++) {
-				for (int j = 0; j < n; j++)
-					path[i][j] = 0;
-			}
-			pos1 = 0;
-			pos2 = 0;
-			path[pos1][pos2] = 1;
-			counter = 0;
+void generatePath(int* path[], int* x, int* y, int n, bool isBranch) {
+	//reset if path is impossible and isn't a branch
+	if ((*x == n - 1 || path[*x + 1][*y] != 0) && (*x == 0 || path[*x - 1][*y] != 0) && (*y == n - 1 || path[*x][*y + 1] != 0) && (*y == 0 || path[*x][*y - 1] != 0) && !isBranch) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++)
+				path[i][j] = 0;
 		}
+		*x = 0;
+		*y = 0;
+		path[*x][*y] = 1;
+	}
+
+	//stop altogether if an error is made
+	else if (!((*x == n - 1 || path[*x + 1][*y] != 0) && (*x == 0 || path[*x - 1][*y] != 0) && (*y == n - 1 || path[*x][*y + 1] != 0) && (*y == 0 || path[*x][*y - 1] != 0) && isBranch)) {
+
 
 
 		//randomly generate a path
-		int move = rand() % 4;
+		int move = rng.i(4);
 
 		switch (move) {
 		case 0:
-			if (pos1 != 0 && path[pos1 - 1][pos2] != 1) {
-				pos1--;
-				path[pos1][pos2] = 1;
+			if (*x != 0 && path[*x - 1][*y] == 0) {
+				*x -= 1;
+					path[*x][*y] = 1;
 			}
 			break;
 		case 1:
-			if (pos2 != n - 1 && path[pos1][pos2 + 1] != 1) {
-				pos2++;
-				path[pos1][pos2] = 1;
+			if (*y != n - 1 && path[*x][*y + 1] == 0) {
+				*y += 1;
+					path[*x][*y] = 2;
 			}
 			break;
 		case 2:
-			if (pos1 != n - 1 && path[pos1 + 1][pos2] != 1) {
-				pos1++;
-				path[pos1][pos2] = 1;
+			if (*x != n - 1 && path[*x + 1][*y] == 0) {
+				*x += 1;
+					path[*x][*y] = 3;
 			}
 			break;
 		case 3:
-			if (pos2 != 0 && path[pos1][pos2 - 1] != 1) {
-				pos2--;
-				path[pos1][pos2] = 1;
+			if (*y != 0 && path[*x][*y - 1] == 0) {
+				*y -= 1;
+					path[*x][*y] = 4;
 			}
 			break;
 		}
 	}
-	system("cls");
-	displaypath(path, n);
+}
+
+void mainPath(int* path[], int n) {
+	int x = 0, y = 0;
+	int* xptr = &x;
+	int* yptr = &y;
+	path[x][y] = 1;
+
+	while (path[n - 1][n - 1] == 0)
+		generatePath(path, xptr, yptr, n, false);
+}
+
+void branchPath(int* path[], int n) {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			//decides whether to make a branch
+			if (path[i][j] != 0 && rng.b(0.5)) {
+				int x = i, y = j, len = 0;
+				int* xptr = &x;
+				int* yptr = &y;
+				//expands the branch
+				while (rng.b(0.8) && len < n/2) {
+					len++;
+					generatePath(path, xptr, yptr, n, true);
+				}
+			}
+		}
+	}
 }
 
 void setup()
@@ -74,16 +93,19 @@ void setup()
 
 
 	//create a dynamic matrix
-	bool** path = new bool* [n];
+	int** path = new int* [n];
 	for (int i = 0; i < n; i++)
-		path[i] = new bool[n];
+		path[i] = new int[n];
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++)
 			path[i][j] = 0;
 	}
 
 
-	createPath(path, n);
+	mainPath(path, n);
+	//todo fucking branches pls
+	branchPath(path, n);
+	createBoard(path, n);
 
 
 	//delete the matrix

@@ -1,3 +1,3 @@
 #pragma once
 
-void displayBoard();
+void createBoard(int* path[], int n);
