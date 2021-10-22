@@ -1,8 +1,7 @@
 #include <iostream>
 #include <ctime>
-#include <queue>
 #include "boardCreation.h"
-#include "boardDisplay.h"
+#include "playerControl.h"
 #include "grand.h"
 using namespace std;
 GRand rng;
@@ -106,7 +105,7 @@ void setup()
 	//todo fucking branches pls
 	for (int i = 0; i < n/10; i++)
 		branchPath(path, n, i);
-	createBoard(path, n);
+	controlPlayer(path, n);
 
 
 	//delete the matrix

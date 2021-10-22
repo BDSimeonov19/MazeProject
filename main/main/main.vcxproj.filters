@@ -27,6 +27,9 @@
     <ClCompile Include="mainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="playerControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boardCreation.h">
@@ -39,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="grand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="playerControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

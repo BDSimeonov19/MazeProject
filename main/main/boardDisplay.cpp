@@ -1,20 +1,22 @@
 #include <iostream>
-#include <queue>
 #include "boardDisplay.h"
 using namespace std;
 
-void displayBoard(int* board[], int n) {
+void displayBoard(int* board[], int n, int playerPosx, int playerPosy) {
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
+			char player = ' ';
+			if (i == playerPosx && j == playerPosy)
+				player = '@';
 			switch (board[i][j]) {
 			case 0:
-				cout << "_|";
+				cout << underline << player << normal << "|";
 				break;
 			case 1:
 				cout << " |";
 				break;
 			case 2:
-				cout << "_ ";
+				cout << underline << player << normal << " ";
 				break;
 			case 3:
 				cout << "  ";
@@ -25,7 +27,7 @@ void displayBoard(int* board[], int n) {
 	}
 }
 
-void createBoard(int* path[], int n) {
+void createBoard(int* path[], int n, int playerPosx, int playerPosy) {
 
 	//create a dynamic matrix
 	int** board = new int* [n];
@@ -55,7 +57,8 @@ void createBoard(int* path[], int n) {
 		}
 	}
 
-	displayBoard(board, n);
+
+	displayBoard(board, n, playerPosx, playerPosy);
 
 	//delete the matrix
 	for (int i = 0; i < n; i++)
