@@ -88,7 +88,7 @@ void setup()
 {
 	int n;
 	cout << "Input a board size\n";
-	cout << "(note: board sizes above ~35 take much longer to create)\n";
+	cout << "(note: board sizes above ~35 take much longer to create)\n";	
 	cin >> n;
 
 
