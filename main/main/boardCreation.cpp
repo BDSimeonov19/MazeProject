@@ -26,6 +26,8 @@ void generatePath(int* path[], int* x, int* y, int n, bool isBranch, int nthBran
 		//randomly generate a path
 		int move = rng.i(4);
 
+
+		//store the movement taken to get to the current cell
 		switch (move) {
 		case 0:
 			if (*x != 0 && path[*x - 1][*y] == 0) {

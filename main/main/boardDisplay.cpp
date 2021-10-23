@@ -40,6 +40,7 @@ void createBoard(int* path[], int n, int playerPosx, int playerPosy) {
 			board[i][j] = 0;
 	}
 
+	//change the _| depending on how the path got there, using the information stored in the cell
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
 			switch (path[i][j]%5) {
