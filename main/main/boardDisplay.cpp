@@ -3,7 +3,12 @@
 using namespace std;
 
 void displayBoard(int* board[], int n, int playerPosx, int playerPosy) {
+	for (int i = 0; i < n; i++)
+		cout << " _";
+	cout << endl;
+	
 	for (int i = 0; i < n; i++) {
+		cout << "|";
 		for (int j = 0; j < n; j++) {
 			char player = ' ';
 			if (i == playerPosx && j == playerPosy)
@@ -18,7 +23,7 @@ void displayBoard(int* board[], int n, int playerPosx, int playerPosy) {
 			case 2:
 				cout << underline << player << normal << " ";
 				break;
-			case 3:
+			default:
 				cout << player << " ";
 				break;
 			}

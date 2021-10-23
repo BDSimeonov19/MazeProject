@@ -15,7 +15,6 @@ void generatePath(int* path[], int* x, int* y, int n, bool isBranch, int nthBran
 		}
 		*x = 0;
 		*y = 0;
-		path[*x][*y] = 1;
 	}
 
 	//stop altogether if an error is made
@@ -61,7 +60,6 @@ void mainPath(int* path[], int n) {
 	int x = 0, y = 0;
 	int* xptr = &x;
 	int* yptr = &y;
-	path[x][y] = 1;
 
 	while (path[n - 1][n - 1] == 0)
 		generatePath(path, xptr, yptr, n, false, 0);
@@ -105,7 +103,7 @@ void setup()
 
 	mainPath(path, n);
 	//todo fucking branches pls
-	for (int i = 0; i < n/10; i++)
+	for (int i = 0; i < n/5; i++)
 		branchPath(path, n, i);
 	controlPlayer(path, n);
 
