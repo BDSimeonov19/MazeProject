@@ -7,6 +7,26 @@
 #include "mainMenu.h"
 using namespace std;
 
+void winScreen() {
+	HANDLE hdlOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	if (hdlOut == INVALID_HANDLE_VALUE)
+	{
+		cerr << "Encountered an Error: " << GetLastError();
+		system("cls");
+	}
+
+	system("cls");
+	cout << "Congratulations!, you solved the maze!\n";
+	
+	SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	cout << "Try another maze\n";
+	SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+	while (true) {
+		if (userInput() == -2)
+			setup();
+	}
+}
+
 void controlPlayer(int* path[], int n) {
 	int xpos = 0;
 	int ypos = 0;
@@ -37,6 +57,9 @@ void controlPlayer(int* path[], int n) {
 			system("cls");
 		}
 
+		if (xpos == n - 1 && ypos == n - 1)
+			winScreen();
+
 		if (input == -1) {
 			int choice = 0;
 			while (true) {
@@ -47,15 +70,21 @@ void controlPlayer(int* path[], int n) {
 					SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 				cout << "Create a new maze\n";
 				SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+
 				if (choice == 1)
 					SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 				cout << "Help\n";
 				SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 
+				if (choice == 2)
+					SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+				cout << "Autosolve\n";
+				SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+
 				int input = userInput();
 				if (input == 0 && choice != 0)
 					choice--;
-				else if (input == 2 && choice != 1)
+				else if (input == 2 && choice != 2)
 					choice++;
 
 				//select an option
@@ -68,8 +97,9 @@ void controlPlayer(int* path[], int n) {
 						setup();
 					if (choice == 1)
 						helpMenu();
+					if (choice == 2)
+						//add autosolve and developer mode
 				}
-
 			}
 		}
 	}
