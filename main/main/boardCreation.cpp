@@ -86,6 +86,7 @@ void branchPath(int* path[], int n, int nthBranch) {
 void setup()
 {
 	int n;
+	system("cls");
 	cout << "Input a board size\n";
 	cout << "(note: board sizes above ~35 take much longer to create)\n";
 	cin >> n;
