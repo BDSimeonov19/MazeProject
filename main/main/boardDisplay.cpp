@@ -13,18 +13,20 @@ void displayBoard(int* board[], int n, int playerPosx, int playerPosy) {
 				cout << underline << player << normal << "|";
 				break;
 			case 1:
-				cout << " |";
+				cout << player << "|";
 				break;
 			case 2:
 				cout << underline << player << normal << " ";
 				break;
 			case 3:
-				cout << "  ";
+				cout << player << " ";
 				break;
 			}
 		}
 		cout << endl;
 	}
+	cout << "x - " << playerPosx << endl;
+	cout << "y - " << playerPosy << endl;
 }
 
 void createBoard(int* path[], int n, int playerPosx, int playerPosy) {
