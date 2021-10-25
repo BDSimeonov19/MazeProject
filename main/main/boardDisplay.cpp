@@ -1,8 +1,8 @@
-#include <iostream>
+﻿#include <iostream>
 #include "boardDisplay.h"
 using namespace std;
 
-void displayBoard(int* board[], int n, int playerPosx, int playerPosy) {
+void displayBoard(int* board[], int n, int xpos, int ypos) {
 	for (int i = 0; i < n; i++)
 		cout << " _";
 	cout << endl;
@@ -11,7 +11,7 @@ void displayBoard(int* board[], int n, int playerPosx, int playerPosy) {
 		cout << "|";
 		for (int j = 0; j < n; j++) {
 			char player = ' ';
-			if (i == playerPosx && j == playerPosy)
+			if (i == xpos && j == ypos)
 				player = '@';
 			switch (board[i][j]) {
 			case 0:
@@ -28,13 +28,17 @@ void displayBoard(int* board[], int n, int playerPosx, int playerPosy) {
 				break;
 			}
 		}
+		if (i == n - 1)
+			cout << "<- end of maze";
 		cout << endl;
 	}
-	cout << "x - " << playerPosx << endl;
-	cout << "y - " << playerPosy << endl;
+
+
+	/*cout << "x - " << xpos << endl;
+	cout << "y - " << ypos << endl;*/
 }
 
-void createBoard(int* path[], int n, int playerPosx, int playerPosy) {
+void createBoard(int* path[], int n, int xpos, int ypos) {
 
 	//create a dynamic matrix
 	int** board = new int* [n];
@@ -66,7 +70,7 @@ void createBoard(int* path[], int n, int playerPosx, int playerPosy) {
 	}
 
 
-	displayBoard(board, n, playerPosx, playerPosy);
+	displayBoard(board, n, xpos, ypos);
 
 	//delete the matrix
 	for (int i = 0; i < n; i++)

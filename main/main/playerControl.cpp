@@ -97,7 +97,7 @@ void controlPlayer(int* path[], int n) {
 						setup();
 					if (choice == 1)
 						helpMenu();
-					if (choice == 2)
+					if (choice == 2);
 						//add autosolve and developer mode
 				}
 			}

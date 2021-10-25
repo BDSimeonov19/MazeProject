@@ -6,19 +6,19 @@
 using namespace std;
 GRand rng;
 
-void generatePath(int* path[], int* x, int* y, int n, bool isBranch, int nthBranch) {
+void generatePath(int* path[], int* xpos, int* ypos, int n, bool isBranch, int nthBranch) {
 	//reset if path is impossible and isn't a branch
-	if ((*x == n - 1 || path[*x + 1][*y] != 0) && (*x == 0 || path[*x - 1][*y] != 0) && (*y == n - 1 || path[*x][*y + 1] != 0) && (*y == 0 || path[*x][*y - 1] != 0) && !isBranch) {
+	if ((*xpos == n - 1 || path[*xpos + 1][*ypos] != 0) && (*xpos == 0 || path[*xpos - 1][*ypos] != 0) && (*ypos == n - 1 || path[*xpos][*ypos + 1] != 0) && (*ypos == 0 || path[*xpos][*ypos - 1] != 0) && !isBranch) {
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++)
 				path[i][j] = 0;
 		}
-		*x = 0;
-		*y = 0;
+		*xpos = 0;
+		*ypos = 0;
 	}
 
 	//stop altogether if an error is made
-	else if (!((*x == n - 1 || path[*x + 1][*y] != 0) && (*x == 0 || path[*x - 1][*y] != 0) && (*y == n - 1 || path[*x][*y + 1] != 0) && (*y == 0 || path[*x][*y - 1] != 0) && isBranch)) {
+	else if (!((*xpos == n - 1 || path[*xpos + 1][*ypos] != 0) && (*xpos == 0 || path[*xpos - 1][*ypos] != 0) && (*ypos == n - 1 || path[*xpos][*ypos + 1] != 0) && (*ypos == 0 || path[*xpos][*ypos - 1] != 0) && isBranch)) {
 
 
 
@@ -29,27 +29,27 @@ void generatePath(int* path[], int* x, int* y, int n, bool isBranch, int nthBran
 		//store the movement taken to get to the current cell
 		switch (move) {
 		case 0:
-			if (*x != 0 && path[*x - 1][*y] == 0) {
-				*x -= 1;
-				path[*x][*y] = nthBranch * 5 + 1;
+			if (*xpos != 0 && path[*xpos - 1][*ypos] == 0) {
+				*xpos -= 1;
+				path[*xpos][*ypos] = nthBranch * 5 + 1;
 			}
 			break;
 		case 1:
-			if (*y != n - 1 && path[*x][*y + 1] == 0) {
-				*y += 1;
-				path[*x][*y] = nthBranch * 5 + 2;
+			if (*ypos != n - 1 && path[*xpos][*ypos + 1] == 0) {
+				*ypos += 1;
+				path[*xpos][*ypos] = nthBranch * 5 + 2;
 			}
 			break;
 		case 2:
-			if (*x != n - 1 && path[*x + 1][*y] == 0) {
-				*x += 1;
-				path[*x][*y] = nthBranch * 5 + 3;
+			if (*xpos != n - 1 && path[*xpos + 1][*ypos] == 0) {
+				*xpos += 1;
+				path[*xpos][*ypos] = nthBranch * 5 + 3;
 			}
 			break;
 		case 3:
-			if (*y != 0 && path[*x][*y - 1] == 0) {
-				*y -= 1;
-				path[*x][*y] = nthBranch * 5 + 4;
+			if (*ypos != 0 && path[*xpos][*ypos - 1] == 0) {
+				*ypos -= 1;
+				path[*xpos][*ypos] = nthBranch * 5 + 4;
 			}
 			break;
 		}
@@ -57,9 +57,9 @@ void generatePath(int* path[], int* x, int* y, int n, bool isBranch, int nthBran
 }
 
 void mainPath(int* path[], int n) {
-	int x = 0, y = 0;
-	int* xptr = &x;
-	int* yptr = &y;
+	int xpos = 0, ypos = 0;
+	int* xptr = &xpos;
+	int* yptr = &ypos;
 
 	while (path[n - 1][n - 1] == 0)
 		generatePath(path, xptr, yptr, n, false, 0);
@@ -70,9 +70,9 @@ void branchPath(int* path[], int n, int nthBranch) {
 		for (int j = 0; j < n; j++) {
 			//decides whether to make a branch
 			if (rng.b(0.50) && (path[i][j] == nthBranch * 5 + 1 || path[i][j] == nthBranch * 5 + 2 || path[i][j] == nthBranch * 5 + 3 || path[i][j] == nthBranch * 5 + 4)) {
-				int x = i, y = j, len = 0;
-				int* xptr = &x;
-				int* yptr = &y;
+				int xpos = i, ypos = j, len = 0;
+				int* xptr = &xpos;
+				int* yptr = &ypos;
 				//expands the branch
 				while (rng.b(0.95)) {
 					len++;
@@ -88,7 +88,7 @@ void setup()
 	int n;
 	system("cls");
 	cout << "Input a board size\n";
-	cout << "(note: board sizes above ~35 take much longer to create)\n";
+	cout << "(note: board sizes above ~50 take much longer to create)\n";
 	cin >> n;
 
 
@@ -103,8 +103,7 @@ void setup()
 
 
 	mainPath(path, n);
-	//todo fucking branches pls
-	for (int i = 0; i < n/5; i++)
+	for (int i = 0; i < n/2; i++)
 		branchPath(path, n, i);
 	controlPlayer(path, n);
 

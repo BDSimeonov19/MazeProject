@@ -42,7 +42,7 @@ void helpMenu() {
 	cout << "A maze is a puzzle where the player is\n";
 	cout << "positioned in one corner of a board and\n";
 	cout << "is tasked to cross to the opposite corner.\n";
-	cout << "|, _ and + characters are walls and thus\n";
+	cout << "| and _ characters are walls and thus\n";
 	cout << "cannot be passed through. Your character\n";
 	cout << "is marked with an @ symbol. You move with\n";
 	cout << "the WASD keys.\n";
