@@ -8,7 +8,11 @@ GRand rng;
 
 void generatePath(int* path[], int* xpos, int* ypos, int n, bool isBranch, int nthBranch) {
 	//reset if path is impossible and isn't a branch
-	if ((*xpos == n - 1 || path[*xpos + 1][*ypos] != 0) && (*xpos == 0 || path[*xpos - 1][*ypos] != 0) && (*ypos == n - 1 || path[*xpos][*ypos + 1] != 0) && (*ypos == 0 || path[*xpos][*ypos - 1] != 0) && !isBranch) {
+	if ((*xpos == n - 1 || path[*xpos + 1][*ypos] != 0) && \
+		(*xpos == 0 || path[*xpos - 1][*ypos] != 0) && \
+		(*ypos == n - 1 || path[*xpos][*ypos + 1] != 0) && \
+		(*ypos == 0 || path[*xpos][*ypos - 1] != 0) && \
+		!isBranch) {
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++)
 				path[i][j] = 0;
@@ -18,7 +22,11 @@ void generatePath(int* path[], int* xpos, int* ypos, int n, bool isBranch, int n
 	}
 
 	//stop altogether if an error is made
-	else if (!((*xpos == n - 1 || path[*xpos + 1][*ypos] != 0) && (*xpos == 0 || path[*xpos - 1][*ypos] != 0) && (*ypos == n - 1 || path[*xpos][*ypos + 1] != 0) && (*ypos == 0 || path[*xpos][*ypos - 1] != 0) && isBranch)) {
+	else if (!((*xpos == n - 1 || path[*xpos + 1][*ypos] != 0) && \
+		(*xpos == 0 || path[*xpos - 1][*ypos] != 0) && \
+		(*ypos == n - 1 || path[*xpos][*ypos + 1] != 0) && \
+		(*ypos == 0 || path[*xpos][*ypos - 1] != 0) && \
+		isBranch)) {
 
 
 

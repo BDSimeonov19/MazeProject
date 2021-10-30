@@ -1,6 +1,8 @@
 #include <iostream>
 #include <conio.h>
 #include <Windows.h>
+#include <vector>
+#include <iterator>
 #include "playerControl.h"
 #include "boardDisplay.h"
 #include "boardCreation.h"
@@ -27,6 +29,108 @@ void winScreen() {
 	}
 }
 
+void pauseMenu(int choice) {
+	HANDLE hdlOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	if (hdlOut == INVALID_HANDLE_VALUE)
+	{
+		cerr << "Encountered an Error: " << GetLastError();
+		system("cls");
+	}
+
+	system("cls");
+	cout << "Paused\n";
+
+	if (choice == 0)
+		SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	cout << "Create a new maze\n";
+	SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+
+	if (choice == 1)
+		SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	cout << "Help\n";
+	SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+
+	if (choice == 2)
+		SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	cout << "Autosolve\n";
+	SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+}
+
+void autoSolve(int* xpos, int* ypos, int* path[], int n) {
+	bool mainPath = false;
+	while (*xpos != n - 1 || *ypos != n - 1) {
+		system("cls");
+		createBoard(path, n, *xpos, *ypos);
+
+		if (!mainPath) {
+			switch (path[*xpos][*ypos] % 5) {
+			case 1:
+				*xpos+=1;
+				break;
+			case 2:
+				*ypos-= 1;
+				break;
+			case 3:
+				*xpos-= 1;
+				break;
+			case 4:
+				*ypos+= 1;
+				break;
+			}
+
+			if (path[*xpos][*ypos] < 5)
+				mainPath = true;
+		}
+		else
+			break;
+	}
+
+	int i = n-1, j = n-1;
+	vector<int> instructions;
+
+	while (!(*xpos == i && *ypos == j)) {
+		instructions.push_back(path[i][j]);
+
+		switch (path[i][j] % 5) {
+		case 1:
+			i++;
+			break;
+		case 2:
+			j--;
+			break;
+		case 3:
+			i--;
+			break;
+		case 4:
+			j++;
+			break;
+		}
+	}
+
+	while (!(*xpos == n-1 && *ypos == n-1)) {
+		switch (instructions.back() % 5) {
+		case 1:
+			*xpos-= 1;
+			break;
+		case 2:
+			*ypos+= 1;
+			break;
+		case 3:
+			*xpos+= 1;
+			break;
+		case 4:
+			*ypos-= 1;
+			break;
+		}
+
+		instructions.pop_back();
+
+		system("cls");
+		createBoard(path, n, *xpos, *ypos);
+	}
+
+}
+
 void controlPlayer(int* path[], int n) {
 	int xpos = 0;
 	int ypos = 0;
@@ -50,36 +154,11 @@ void controlPlayer(int* path[], int n) {
 		else if (input == 3 && ypos != 0 && (path[xpos][ypos - 1] % 5 == 4 || path[xpos][ypos] % 5 == 2))
 			ypos--;
 
-		HANDLE hdlOut = GetStdHandle(STD_OUTPUT_HANDLE);
-		if (hdlOut == INVALID_HANDLE_VALUE)
-		{
-			cerr << "Encountered an Error: " << GetLastError();
-			system("cls");
-		}
-
-		if (xpos == n - 1 && ypos == n - 1)
-			winScreen();
-
 		if (input == -1) {
 			int choice = 0;
 			while (true) {
-				system("cls");
-				cout << "Paused\n";
 
-				if (choice == 0)
-					SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-				cout << "Create a new maze\n";
-				SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-
-				if (choice == 1)
-					SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-				cout << "Help\n";
-				SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-
-				if (choice == 2)
-					SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-				cout << "Autosolve\n";
-				SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+				pauseMenu(choice);
 
 				int input = userInput();
 				if (input == 0 && choice != 0)
@@ -97,10 +176,16 @@ void controlPlayer(int* path[], int n) {
 						setup();
 					if (choice == 1)
 						helpMenu();
-					if (choice == 2);
+					if (choice == 2) {
+						autoSolve(&xpos, &ypos, path, n);
+						break;
+					}
 						//add autosolve and developer mode
 				}
 			}
 		}
+
+		if (xpos == n - 1 && ypos == n - 1)
+			winScreen();
 	}
 }
