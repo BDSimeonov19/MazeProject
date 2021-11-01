@@ -32,9 +32,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="boardCreation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="boardDisplay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -45,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="playerControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="buttonInputs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

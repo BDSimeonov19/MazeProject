@@ -38,21 +38,25 @@ void pauseMenu(int choice) {
 	}
 
 	system("cls");
-	cout << "Paused\n";
+	cout << "-----------------\n";
+	cout << "|               |\n";
+	cout << "|    Paused     |\n";
+	cout << "|               |\n";
+	cout << "-----------------\n";
 
 	if (choice == 0)
 		SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-	cout << "Create a new maze\n";
+	cout << " Create a new maze\n";
 	SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 
 	if (choice == 1)
 		SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-	cout << "Help\n";
+	cout << "      Help\n";
 	SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 
 	if (choice == 2)
 		SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-	cout << "Autosolve\n";
+	cout << "    Autosolve\n";
 	SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 }
 

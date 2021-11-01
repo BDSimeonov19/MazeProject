@@ -29,7 +29,7 @@ void displayBoard(int* board[], int n, int xpos, int ypos) {
 			}
 		}
 		if (i == n - 1)
-			cout << "<- end of maze";
+			cout << "<- goal";
 		cout << endl;
 	}
 
