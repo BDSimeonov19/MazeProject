@@ -83,6 +83,7 @@ void mainMenu() {
 		cout << "Help\n";
 		SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 
+		//take user input
 		int input = userInput();
 		if (input == 0 && choice != 0)
 			choice--;

@@ -56,12 +56,14 @@ void pauseMenu(int choice) {
 	SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 }
 
+
+//autosolver
 void autoSolve(int* xpos, int* ypos, int* path[], int n) {
 	bool mainPath = false;
 	while (*xpos != n - 1 || *ypos != n - 1) {
 		system("cls");
 		createBoard(path, n, *xpos, *ypos);
-
+		//follos a branch back to the main path
 		if (!mainPath) {
 			switch (path[*xpos][*ypos] % 5) {
 			case 1:
@@ -85,6 +87,7 @@ void autoSolve(int* xpos, int* ypos, int* path[], int n) {
 			break;
 	}
 
+	//reverses the instructions of the main path
 	int i = n-1, j = n-1;
 	vector<int> instructions;
 
@@ -107,6 +110,7 @@ void autoSolve(int* xpos, int* ypos, int* path[], int n) {
 		}
 	}
 
+	//follows the instructions to get to the end
 	while (!(*xpos == n-1 && *ypos == n-1)) {
 		switch (instructions.back() % 5) {
 		case 1:
@@ -160,6 +164,7 @@ void controlPlayer(int* path[], int n) {
 
 				pauseMenu(choice);
 
+				//check for user input
 				int input = userInput();
 				if (input == 0 && choice != 0)
 					choice--;
@@ -180,11 +185,11 @@ void controlPlayer(int* path[], int n) {
 						autoSolve(&xpos, &ypos, path, n);
 						break;
 					}
-						//add autosolve and developer mode
 				}
 			}
 		}
 
+		//win screen check
 		if (xpos == n - 1 && ypos == n - 1)
 			winScreen();
 	}
