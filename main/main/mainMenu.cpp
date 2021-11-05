@@ -13,11 +13,11 @@ int userInput() {
 
 	if (input == upInput)
 		return 0;
-	else if (input == leftInput)
+	else if (input == rightInput)
 		return 1;
 	else if (input == downInput)
 		return 2;
-	else if (input == rightInput)
+	else if (input == leftInput)
 		return 3;
 	else if (input == 27)
 		return -1;
