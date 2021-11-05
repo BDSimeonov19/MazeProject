@@ -44,7 +44,10 @@
     <ClInclude Include="playerControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="buttonInputs.h">
+    <ClInclude Include="mazeSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inputSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

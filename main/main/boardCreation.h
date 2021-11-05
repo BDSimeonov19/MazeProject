@@ -1,3 +1,3 @@
 #pragma once
 
-void setup();
+void setup(float branchBeginChance, float branchEndChance);

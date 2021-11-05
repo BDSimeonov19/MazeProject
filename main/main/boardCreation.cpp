@@ -73,16 +73,16 @@ void mainPath(int* path[], int n) {
 		generatePath(path, xptr, yptr, n, false, 0);
 }
 
-void branchPath(int* path[], int n, int nthBranch) {
+void branchPath(int* path[], int n, int nthBranch, float branchBeginChance, float branchEndChance) {
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
 			//decides whether to make a branch
-			if (rng.b(0.50) && (path[i][j] == nthBranch * 5 + 1 || path[i][j] == nthBranch * 5 + 2 || path[i][j] == nthBranch * 5 + 3 || path[i][j] == nthBranch * 5 + 4)) {
+			if (rng.b(branchBeginChance) && (path[i][j] == nthBranch * 5 + 1 || path[i][j] == nthBranch * 5 + 2 || path[i][j] == nthBranch * 5 + 3 || path[i][j] == nthBranch * 5 + 4)) {
 				int xpos = i, ypos = j, len = 0;
 				int* xptr = &xpos;
 				int* yptr = &ypos;
 				//expands the branch
-				while (rng.b(0.95)) {
+				while (rng.b(branchEndChance)) {
 					len++;
 					generatePath(path, xptr, yptr, n, true, nthBranch + 1);
 				}
@@ -91,8 +91,7 @@ void branchPath(int* path[], int n, int nthBranch) {
 	}
 }
 
-void setup()
-{
+void setup(float branchBeginChance, float branchEndChance) {
 	int n;
 	system("cls");
 	cout << "Input a board size\n";
@@ -112,7 +111,7 @@ void setup()
 
 	mainPath(path, n);
 	for (int i = 0; i < n / 2; i++)
-		branchPath(path, n, i);
+		branchPath(path, n, i, branchBeginChance, branchEndChance);
 	controlPlayer(path, n);
 
 

@@ -4,7 +4,7 @@
 #include <string>
 #include "mainMenu.h"
 #include "boardCreation.h"
-#include "buttonInputs.h"
+#include "inputSettings.h"
 using namespace std;
 
 int userInput() {
@@ -25,7 +25,7 @@ int userInput() {
 		return -2;
 }
 
-void optionsDisplay(string str, bool chosen, char ch) {
+void optionsDisplay(string str, bool chosen, char ch, float var) {
 	HANDLE hdlOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	if (hdlOut == INVALID_HANDLE_VALUE)
 	{
@@ -34,7 +34,10 @@ void optionsDisplay(string str, bool chosen, char ch) {
 	}
 	if (chosen)
 		SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-	cout << str << ch << endl;
+	cout << str << ch;
+	if (var >= 0)
+		cout << var;
+	cout << endl;
 	SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 }
 
@@ -57,17 +60,16 @@ void helpMenu() {
 			break;
 		}
 	}
-
 }
 
-void buttonRemap() {
+void settingsMenu() {
 	int choice = 0;
 
 
 	while (true) {
 		cout << "-----------------\n";
 		cout << "|               |\n";
-		cout << "| Remap buttons |\n";
+		cout << "|    Settings   |\n";
 		cout << "|               |\n";
 		cout << "-----------------\n";
 		cout << "(note: use W, S and Enter to select)\n";
@@ -82,13 +84,13 @@ void buttonRemap() {
 		int input = userInput();
 		if (input == 0 && choice != 0)
 			choice--;
-		else if (input == 2 && choice != 5)
+		else if (input == 2 && choice != 3)
 			choice++;
 
 		//select an option
 		if (input == -2) {
-			system("cls");
 			switch (choice) {
+				system("cls");
 			case 0:
 				upInput = _getch();
 				break;
@@ -102,43 +104,6 @@ void buttonRemap() {
 				rightInput = _getch();
 				break;
 			}
-		}
-		system("cls");
-
-		if (input == -1)
-			break;
-	}
-}
-
-void settingsMenu() {
-	int choice = 0;
-
-	while (true) {
-		cout << "-----------------\n";
-		cout << "|               |\n";
-		cout << "|    Settings   |\n";
-		cout << "|               |\n";
-		cout << "-----------------\n";
-		cout << "(note: use W, S and Enter to select)\n";
-
-		//options
-		optionsDisplay("  Remap buttons", choice == 0);
-		optionsDisplay("  Developer mode", choice == 1);
-
-		//take user input
-		int input = userInput();
-		if (input == 0 && choice != 0)
-			choice--;
-		else if (input == 2 && choice != 1)
-			choice++;
-
-		//select an option
-		if (input == -2) {
-			system("cls");
-			if (choice == 0)
-				buttonRemap();
-			if (choice == 1);
-
 		}
 		system("cls");
 
@@ -174,7 +139,7 @@ void mainMenu() {
 		if (input == -2) {
 			system("cls");
 			if (choice == 0)
-				setup();
+				setup(0.5,0.95);
 			if (choice == 1)
 				helpMenu();
 			if (choice == 2)

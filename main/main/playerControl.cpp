@@ -4,6 +4,7 @@
 #include <vector>
 #include <iterator>
 #include "playerControl.h"
+#include "mazeSettings.h"
 #include "boardDisplay.h"
 #include "boardCreation.h"
 #include "mainMenu.h"
@@ -18,7 +19,54 @@ void winScreen() {
 
 	while (true) {
 		if (userInput() == -2)
-			setup();
+			setup(branchBeginChance, branchEndChance);
+	}
+}
+
+void devMenu(float* beginChance, float* endChance) {
+	int choice = 0;
+
+	while (true) {
+		cout << "-----------------\n";
+		cout << "|               |\n";
+		cout << "|    Dev menu   |\n";
+		cout << "|               |\n";
+		cout << "-----------------\n";
+		cout << "(note: input values between 0 and 1)\n";
+
+		//options
+		optionsDisplay("Chance of making a branch", choice == 0, ' ', *beginChance);
+		optionsDisplay("Chance of ending a branch", choice == 1, ' ', *endChance);
+
+		//take user input
+		int input = userInput();
+		if (input == 0 && choice != 0)
+			choice--;
+		else if (input == 2 && choice != 1)
+			choice++;
+
+		//select an option
+		float temp;
+		if (input == -2) {
+			system("cls");
+			cin >> temp;
+			if (temp < 0 || temp > 1)
+				cout << "You must enter a value between 0 and 1\n";
+			else {
+				switch (choice) {
+				case 0:
+					*beginChance = temp;
+					break;
+				case 1:
+					*endChance = temp;
+					break;
+				}
+			}
+		}
+		system("cls");
+
+		if (input == -1)
+			break;
 	}
 }
 
@@ -40,6 +88,7 @@ void pauseMenu(int choice) {
 	optionsDisplay(" Create a new maze", choice == 0);
 	optionsDisplay("      Help", choice == 1);
 	optionsDisplay("    Autosolve", choice == 2);
+	optionsDisplay(" Developer options", choice == 3);
 }
 
 
@@ -154,7 +203,7 @@ void controlPlayer(int* path[], int n) {
 				int input = userInput();
 				if (input == 0 && choice != 0)
 					choice--;
-				else if (input == 2 && choice != 2)
+				else if (input == 2 && choice != 3)
 					choice++;
 
 				//select an option
@@ -164,13 +213,15 @@ void controlPlayer(int* path[], int n) {
 				if (input == -2) {
 					system("cls");
 					if (choice == 0)
-						setup();
+						setup(branchBeginChance, branchEndChance);
 					if (choice == 1)
 						helpMenu();
 					if (choice == 2) {
 						autoSolve(&xpos, &ypos, path, n);
 						break;
 					}
+					if (choice == 3)
+						devMenu(&branchBeginChance, &branchEndChance);
 				}
 			}
 		}
