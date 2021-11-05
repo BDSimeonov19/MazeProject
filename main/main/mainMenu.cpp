@@ -1,6 +1,7 @@
 #include <iostream>
 #include <conio.h>
 #include <Windows.h>
+#include <string>
 #include "mainMenu.h"
 #include "boardCreation.h"
 #include "buttonInputs.h"
@@ -24,15 +25,21 @@ int userInput() {
 		return -2;
 }
 
-
-
-void helpMenu() {
+void optionsDisplay(string str, bool chosen, char ch) {
 	HANDLE hdlOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	if (hdlOut == INVALID_HANDLE_VALUE)
 	{
 		cerr << "Encountered an Error: " << GetLastError();
 		system("cls");
 	}
+	if (chosen)
+		SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	cout << str << ch << endl;
+	SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+}
+
+void helpMenu() {
+
 
 	cout << "A maze is a puzzle where the player is\n";
 	cout << "positioned in one corner of a board and\n";
@@ -41,14 +48,11 @@ void helpMenu() {
 	cout << "cannot be passed through. Your character\n";
 	cout << "is marked with an @ symbol. You move with\n";
 	cout << "the WASD keys.\n";
-	cout << "Press escape to open the pause menu.";
+	cout << "Press escape to open the pause menu.\n";
 
-	SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-	cout << "\nGo back\n";
-	SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 
 	while (true) {
-		if (userInput() == -2) {
+		if (userInput() == -1) {
 			system("cls");
 			break;
 		}
@@ -59,12 +63,6 @@ void helpMenu() {
 void buttonRemap() {
 	int choice = 0;
 
-	HANDLE hdlOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	if (hdlOut == INVALID_HANDLE_VALUE)
-	{
-		cerr << "Encountered an Error: " << GetLastError();
-		system("cls");
-	}
 
 	while (true) {
 		cout << "-----------------\n";
@@ -74,29 +72,11 @@ void buttonRemap() {
 		cout << "-----------------\n";
 		cout << "(note: use W, S and Enter to select)\n";
 
-		//option 1
-		if (choice == 0)
-			SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		cout << "Up - " << upInput << endl;
-		SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-
-		//option 2
-		if (choice == 1)
-			SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		cout << "Left - " << leftInput << endl;
-		SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-
-		//option 3
-		if (choice == 2)
-			SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		cout << "Down - " << downInput << endl;
-		SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-
-		//option 4
-		if (choice == 3)
-			SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		cout << "Right - " << rightInput << endl;
-		SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+		//options
+		optionsDisplay("Up - ", choice == 0, upInput);
+		optionsDisplay("Left - ", choice == 1, leftInput);
+		optionsDisplay("Down - ", choice == 2, downInput);
+		optionsDisplay("Right - ", choice == 3, rightInput);
 
 		//take user input
 		int input = userInput();
@@ -124,7 +104,7 @@ void buttonRemap() {
 			}
 		}
 		system("cls");
-		
+
 		if (input == -1)
 			break;
 	}
@@ -132,13 +112,6 @@ void buttonRemap() {
 
 void settingsMenu() {
 	int choice = 0;
-
-	HANDLE hdlOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	if (hdlOut == INVALID_HANDLE_VALUE)
-	{
-		cerr << "Encountered an Error: " << GetLastError();
-		system("cls");
-	}
 
 	while (true) {
 		cout << "-----------------\n";
@@ -148,17 +121,9 @@ void settingsMenu() {
 		cout << "-----------------\n";
 		cout << "(note: use W, S and Enter to select)\n";
 
-		//option 1
-		if (choice == 0)
-			SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		cout << "  Remap buttons\n";
-		SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-
-		//option 2
-		if (choice == 1)
-			SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		cout << "  Developer mode\n";
-		SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+		//options
+		optionsDisplay("  Remap buttons", choice == 0);
+		optionsDisplay("  Developer mode", choice == 1);
 
 		//take user input
 		int input = userInput();
@@ -176,18 +141,14 @@ void settingsMenu() {
 
 		}
 		system("cls");
+
+		if (input == -1)
+			break;
 	}
 }
 
 void mainMenu() {
 	int choice = 0;
-
-	HANDLE hdlOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	if (hdlOut == INVALID_HANDLE_VALUE)
-	{
-		cerr << "Encountered an Error: " << GetLastError();
-		system("cls");
-	}
 
 	while (true) {
 		cout << "-----------------\n";
@@ -197,24 +158,10 @@ void mainMenu() {
 		cout << "-----------------\n";
 		cout << "(note: use W, S and Enter to select)\n";
 
-		//option 1
-		if (choice == 0)
-			SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		cout << "      Start\n";
-		SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-
-		//option 2
-		if (choice == 1)
-			SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		cout << "      Help\n";
-		SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-
-		//option 3
-		if (choice == 2)
-			SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		cout << "    Settings\n";
-		SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-
+		//options
+		optionsDisplay("      Start", choice == 0);
+		optionsDisplay("      Help", choice == 1);
+		optionsDisplay("    Settings", choice == 2);
 
 		//take user input
 		int input = userInput();
