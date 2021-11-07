@@ -71,12 +71,6 @@ void devMenu(float* beginChance, float* endChance) {
 }
 
 void pauseMenu(int choice) {
-	HANDLE hdlOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	if (hdlOut == INVALID_HANDLE_VALUE)
-	{
-		cerr << "Encountered an Error: " << GetLastError();
-		system("cls");
-	}
 
 	system("cls");
 	cout << "-----------------\n";
@@ -174,10 +168,11 @@ void controlPlayer(int* path[], int n) {
 	int xpos = 0;
 	int ypos = 0;
 
-	while (true) {
-		system("cls");
-		createBoard(path, n, xpos, ypos);
+	system("cls");
+	createBoard(path, n, xpos, ypos);
 
+	while (true) {
+		bool refreshBoard = true;
 		int input = userInput();
 
 		//check the validity of the movement by looking at the cell we're trying to get into and seeing how the path got there
@@ -192,6 +187,9 @@ void controlPlayer(int* path[], int n) {
 
 		else if (input == 3 && ypos != 0 && (path[xpos][ypos - 1] % 5 == 4 || path[xpos][ypos] % 5 == 2))
 			ypos--;
+
+		else
+			refreshBoard = false;
 
 		if (input == -1) {
 			int choice = 0;
@@ -229,5 +227,10 @@ void controlPlayer(int* path[], int n) {
 		//win screen check
 		if (xpos == n - 1 && ypos == n - 1)
 			winScreen();
+	
+		if (input != -3 && refreshBoard) {
+			system("cls");
+			createBoard(path, n, xpos, ypos);
+		}
 	}
 }

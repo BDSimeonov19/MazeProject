@@ -23,6 +23,8 @@ int userInput() {
 		return -1;
 	else if (input == '\r')
 		return -2;
+	else
+		return -3;
 }
 
 void optionsDisplay(string str, bool chosen, char ch, float var) {
