@@ -7,6 +7,12 @@
 #include "inputSettings.h"
 using namespace std;
 
+/// <summary>
+/// Takes the user input and returns an int between 3 and -3
+/// </summary>
+/// <returns>
+/// A value that stands for the user input, used in other functions
+/// </returns>
 int userInput() {
 	//take user input
 	int input = _getch();
@@ -24,25 +30,47 @@ int userInput() {
 	else if (input == '\r')
 		return -2;
 	else
+		//return -3 when there's a redundant input
 		return -3;
 }
 
+/// <summary>
+/// Displays the options for the menus and highlits the chosen ones
+/// </summary>
+/// <param name="str">
+/// The string to be displayed
+/// </param>
+/// <param name="chosen">
+/// A boolean value of whether to highlit the text
+/// </param>
+/// <param name="ch">
+/// An extra character that's added to the string
+/// </param>
+/// <param name="var">
+/// A variable that's displayed if inputed
+/// </param>
 void optionsDisplay(string str, bool chosen, char ch, float var) {
+	//error handler
 	HANDLE hdlOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	if (hdlOut == INVALID_HANDLE_VALUE)
 	{
 		cerr << "Encountered an Error: " << GetLastError();
 		system("cls");
 	}
+	//if the text has been chosen, highlit it
 	if (chosen)
 		SetConsoleTextAttribute(hdlOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 	cout << str << ch;
 	if (var >= 0)
+		//if there's a variable to be displayed, display it
 		cout << var;
 	cout << endl;
 	SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 }
 
+/// <summary>
+/// A menu with a description of how to play and what to do
+/// </summary>
 void helpMenu() {
 
 
@@ -55,7 +83,7 @@ void helpMenu() {
 	cout << "the WASD keys.\n";
 	cout << "Press escape to open the pause menu.\n";
 
-
+	//take user input to return to main menu
 	while (true) {
 		if (userInput() == -1) {
 			system("cls");
@@ -64,6 +92,9 @@ void helpMenu() {
 	}
 }
 
+/// <summary>
+/// A menu in which you can remap your inputs across the whole game
+/// </summary>
 void settingsMenu() {
 	int choice = 0;
 
@@ -114,6 +145,9 @@ void settingsMenu() {
 	}
 }
 
+/// <summary>
+/// The main menu which holds every other menu and the maze itself
+/// </summary>
 void mainMenu() {
 	int choice = 0;
 

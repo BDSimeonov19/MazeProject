@@ -9,7 +9,9 @@
 #include "boardCreation.h"
 #include "mainMenu.h"
 using namespace std;
-
+/// <summary>
+/// Redirects the user to the win screen and prompts them to try another maze
+/// </summary>
 void winScreen() {
 	system("cls");
 	cout << "Congratulations!, you solved the maze!\n";
@@ -17,12 +19,22 @@ void winScreen() {
 	//option
 	optionsDisplay("Try another maze", true);
 
+	//wait for a certain input, to which the player is redirected to another maze
 	while (true) {
 		if (userInput() == -2)
 			setup(branchBeginChance, branchEndChance);
 	}
 }
 
+/// <summary>
+/// Presents the user a menu with developer options to customize your maze generator
+/// </summary>
+/// <param name="beginChance">
+/// The chance of starting a branch, holds a value between 0 and 1
+/// </param>
+/// <param name="endChance">
+/// The chance of ending a branch, holds a value between 0 and 1
+/// </param>
 void devMenu(float* beginChance, float* endChance) {
 	int choice = 0;
 
@@ -70,6 +82,12 @@ void devMenu(float* beginChance, float* endChance) {
 	}
 }
 
+/// <summary>
+/// Displays a pause menu through which other settings are accessed
+/// </summary>
+/// <param name="choice">
+/// Holds the value of the selected option and highlights it
+/// </param>
 void pauseMenu(int choice) {
 
 	system("cls");
@@ -86,7 +104,21 @@ void pauseMenu(int choice) {
 }
 
 
-//autosolver
+/// <summary>
+/// Autosolves the maze by following a branch back to the main path, reversing the instructions of the main path and following the reversed instructions to the end
+/// </summary>
+/// <param name="xpos">
+/// Position of the character on the x coordinate
+/// </param>
+/// <param name="ypos">
+/// Position of the character on the x coordinate
+/// </param>
+/// <param name="path">
+/// A dynamic matrix which stores the paths on the board and the instructions to get to them
+/// </param>
+/// <param name="n">
+/// The size of the board
+/// </param>
 void autoSolve(int* xpos, int* ypos, int* path[], int n) {
 	bool mainPath = false;
 	while (*xpos != n - 1 || *ypos != n - 1) {
@@ -108,7 +140,7 @@ void autoSolve(int* xpos, int* ypos, int* path[], int n) {
 				*ypos+= 1;
 				break;
 			}
-
+			//triggers a flag which says that the position of the autosolver is on the main path
 			if (path[*xpos][*ypos] < 5)
 				mainPath = true;
 		}
@@ -121,6 +153,7 @@ void autoSolve(int* xpos, int* ypos, int* path[], int n) {
 	vector<int> instructions;
 
 	while (!(*xpos == i && *ypos == j)) {
+		//stores the instructions
 		instructions.push_back(path[i][j]);
 
 		switch (path[i][j] % 5) {
@@ -139,7 +172,7 @@ void autoSolve(int* xpos, int* ypos, int* path[], int n) {
 		}
 	}
 
-	//follows the instructions to get to the end
+	//follows the reversed instructions to get to the end
 	while (!(*xpos == n-1 && *ypos == n-1)) {
 		switch (instructions.back() % 5) {
 		case 1:
@@ -156,14 +189,25 @@ void autoSolve(int* xpos, int* ypos, int* path[], int n) {
 			break;
 		}
 
+		//removes the instructions
 		instructions.pop_back();
 
 		system("cls");
+		//displays the board each move
 		createBoard(path, n, *xpos, *ypos);
 	}
 
 }
 
+/// <summary>
+/// Takes in player movement and checks its validity. If the move is not invalid change the x,y positions of the player.
+/// </summary>
+/// <param name="path">
+/// A dynamic matrix which stores the paths on the board and the instructions to get to them
+/// </param>
+/// <param name="n">
+/// The size of the board
+/// </param>
 void controlPlayer(int* path[], int n) {
 	int xpos = 0;
 	int ypos = 0;
@@ -187,10 +231,11 @@ void controlPlayer(int* path[], int n) {
 
 		else if (input == 3 && ypos != 0 && (path[xpos][ypos - 1] % 5 == 4 || path[xpos][ypos] % 5 == 2))
 			ypos--;
-
+		//if the move is invalid, don't refresh the screen
 		else
 			refreshBoard = false;
 
+		//if the input is esc open pause menu
 		if (input == -1) {
 			int choice = 0;
 			while (true) {
@@ -204,10 +249,11 @@ void controlPlayer(int* path[], int n) {
 				else if (input == 2 && choice != 3)
 					choice++;
 
-				//select an option
+				//go back to the maze if the user presses esc
 				if (input == -1)
 					break;
 
+				//select an option
 				if (input == -2) {
 					system("cls");
 					if (choice == 0)
@@ -228,6 +274,7 @@ void controlPlayer(int* path[], int n) {
 		if (xpos == n - 1 && ypos == n - 1)
 			winScreen();
 	
+		//check whether the input is redundant or there's no need to refresh the board
 		if (input != -3 && refreshBoard) {
 			system("cls");
 			createBoard(path, n, xpos, ypos);
