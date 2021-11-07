@@ -1,0 +1,16 @@
+digraph "autoSolve"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="autoSolve",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Autosolves the maze by following a branch back to the main path, reversing the instructions of the ma..."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="createBoard",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$board_display_8cpp.html#a8025802260f41f3839545cddcafcc147",tooltip="Creates a board which intern is displayed and changed depending on the current player position"];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="displayBoard",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$board_display_8cpp.html#a74a7f134a03fce64acb0d4fbfce8579b",tooltip="Displays the current board state using the parameters given. Adds the player to that board and update..."];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="mainPath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$board_creation_8cpp.html#a5701285d66b2b6ece48bfba7dda6b935",tooltip="Generates the main path"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="generatePath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$board_creation_8cpp.html#a2dfc8048e8cb8ad577a689be6a9916f7",tooltip="Randomly generates a path based on the inputs given. Resets the path taken if it gets stuck."];
+}

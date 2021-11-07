@@ -1,0 +1,12 @@
+digraph "devMenu"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="devMenu",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Presents the user a menu with developer options to customize your maze generator"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="optionsDisplay",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_menu_8cpp.html#ae18d07ed16a2611d33dbeb0b1a3f3579",tooltip="Displays the options for the menus and highlits the chosen ones"];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="userInput",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_menu_8cpp.html#aa97da210c9fc91edc1ae299f3566a6f8",tooltip="Takes the user input and returns an int between 3 and -3"];
+}

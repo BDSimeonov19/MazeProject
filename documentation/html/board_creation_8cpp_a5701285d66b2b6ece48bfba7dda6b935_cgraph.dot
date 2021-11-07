@@ -1,0 +1,10 @@
+digraph "mainPath"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="mainPath",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Generates the main path"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="generatePath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$board_creation_8cpp.html#a2dfc8048e8cb8ad577a689be6a9916f7",tooltip="Randomly generates a path based on the inputs given. Resets the path taken if it gets stuck."];
+}

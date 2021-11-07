@@ -1,0 +1,44 @@
+digraph "setup"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="setup",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="A setup function before calling in the board creation. Makes a dynamic matrix and variables that will..."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="branchPath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$board_creation_8cpp.html#ab910b01bfbb3ad3769434f7378bad58b",tooltip="Generates the branches"];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="generatePath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$board_creation_8cpp.html#a2dfc8048e8cb8ad577a689be6a9916f7",tooltip="Randomly generates a path based on the inputs given. Resets the path taken if it gets stuck."];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="controlPlayer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$player_control_8cpp.html#a59466cadf0833e66779d56c593e9cfaf",tooltip="Takes in player movement and checks its validity. If the move is not invalid change the x,..."];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="autoSolve",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$player_control_8cpp.html#ad2cf8205eb5444d8abb1928798711921",tooltip="Autosolves the maze by following a branch back to the main path, reversing the instructions of the ma..."];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="createBoard",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$board_display_8cpp.html#a8025802260f41f3839545cddcafcc147",tooltip="Creates a board which intern is displayed and changed depending on the current player position"];
+  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="displayBoard",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$board_display_8cpp.html#a74a7f134a03fce64acb0d4fbfce8579b",tooltip="Displays the current board state using the parameters given. Adds the player to that board and update..."];
+  Node5 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="mainPath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$board_creation_8cpp.html#a5701285d66b2b6ece48bfba7dda6b935",tooltip="Generates the main path"];
+  Node8 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="devMenu",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$player_control_8cpp.html#a374b6753f7c123c4b68574c7f38abd6d",tooltip="Presents the user a menu with developer options to customize your maze generator"];
+  Node9 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="optionsDisplay",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_menu_8cpp.html#ae18d07ed16a2611d33dbeb0b1a3f3579",tooltip="Displays the options for the menus and highlits the chosen ones"];
+  Node9 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="userInput",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_menu_8cpp.html#aa97da210c9fc91edc1ae299f3566a6f8",tooltip="Takes the user input and returns an int between 3 and -3"];
+  Node4 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="helpMenu",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$main_menu_8cpp.html#ac711f79a35ebd31f89aebf9ef213d904",tooltip="A menu with a description of how to play and what to do"];
+  Node12 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="pauseMenu",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$player_control_8cpp.html#a62ccb771226a248b78cf16999b5f972f",tooltip="Displays a pause menu through which other settings are accessed"];
+  Node13 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="winScreen",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$player_control_8cpp.html#a1977dc8c65ec26b6e2013d032daa7aae",tooltip="Redirects the user to the win screen and prompts them to try another maze"];
+  Node14 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}
