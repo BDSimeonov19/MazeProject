@@ -10,3 +10,22 @@ For those who are new to the programming scene, you just need a simple command t
 ```
 git clone https://github.com/BDSimeonov19/MazeProject
 ```
+
+### Contributions
+[Boris Simeonov](https://github.com/BDSimeonov19/)
+- Project back end developer
+- Documentation manager
+- Project manager
+- 100% contribution to the front end
+- 100% contribution to the back end
+
+[Stijn Verschooten](https://github.com/belgiantrashboy)
+- Contribution to algorithms
+- Logistics manager
+
+[Yoan Gavrilov](https://github.com/YAGavrilov19/)
+- QA documentation
+
+[Rosen Papazov](https://github.com/RMPapazov19/)
+[Mertin Dikmeshefket](https://github.com/MSDikmeshefket19/)
+[Danislav Todorov](https://github.com/DATodorov19)
